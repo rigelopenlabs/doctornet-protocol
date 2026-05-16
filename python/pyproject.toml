@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "doctornet-protocol"
+version = "0.1.0"
+description = "Shared DTOs for the DoctorNet ecosystem (NOC + agents + mobile)"
+readme = "README.md"
+license = { text = "Proprietary" }
+authors = [{ name = "Rigel Open Labs" }]
+requires-python = ">=3.10"
+dependencies = [
+  "pydantic>=2.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/mrhobbes79/doctornet-protocol"
+
+[tool.setuptools.packages.find]
+include = ["doctornet_protocol*"]
