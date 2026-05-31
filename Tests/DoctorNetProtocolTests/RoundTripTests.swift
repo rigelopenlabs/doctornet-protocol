@@ -20,7 +20,7 @@ final class RoundTripTests: XCTestCase {
                     address: "1.1.1.1",
                     category: "Internet",
                     statusAtEnd: "online",
-                    metrics: HostMetricsPayload(latencyAvgMs: 12.5, packetLossPct: 0, jitterMs: 0.8, pingsSent: 30, pingsOk: 30)
+                    metrics: HostMetricsPayload(latencyAvgMs: 12.5, packetLossPct: 0, jitterMs: 0.8, pingsSent: 30, pingsOk: 30, statusChanges: [["timestamp": "2026-05-31T00:00:00Z", "from": "online", "to": "offline"]])
                 )
             ],
             iperfSamples: [
@@ -38,6 +38,7 @@ final class RoundTripTests: XCTestCase {
 
         XCTAssertEqual(decoded.deviceName, report.deviceName)
         XCTAssertEqual(decoded.hosts.count, 1)
+        XCTAssertEqual(decoded.hosts.first?.metrics.statusChanges?.first?["to"], "offline")
         XCTAssertEqual(decoded.iperfSamples.first?.serverHost, "iperf.example.com")
     }
 
@@ -68,6 +69,6 @@ final class RoundTripTests: XCTestCase {
 
     func testVersionConstant() {
         XCTAssertEqual(ProtocolVersion.current, "1.0")
-        XCTAssertEqual(ProtocolVersion.packageVersion, "0.1.0")
+        XCTAssertEqual(ProtocolVersion.packageVersion, "0.1.1")
     }
 }

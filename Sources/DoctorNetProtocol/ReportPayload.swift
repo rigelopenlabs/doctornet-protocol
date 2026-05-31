@@ -9,6 +9,9 @@ public struct HostMetricsPayload: Codable, Equatable, Sendable {
     public var jitterMs: Double
     public var pingsSent: Int
     public var pingsOk: Int
+    /// Up/down transitions during the period. Each entry is {timestamp, from, to}.
+    /// Matches the Python side's `status_changes: list[dict]`.
+    public var statusChanges: [[String: String]]?
 
     enum CodingKeys: String, CodingKey {
         case latencyAvgMs = "latency_avg_ms"
@@ -19,9 +22,10 @@ public struct HostMetricsPayload: Codable, Equatable, Sendable {
         case jitterMs = "jitter_ms"
         case pingsSent = "pings_sent"
         case pingsOk = "pings_ok"
+        case statusChanges = "status_changes"
     }
 
-    public init(latencyAvgMs: Double? = nil, latencyMinMs: Double? = nil, latencyMaxMs: Double? = nil, latencyP95Ms: Double? = nil, packetLossPct: Double = 0, jitterMs: Double = 0, pingsSent: Int = 0, pingsOk: Int = 0) {
+    public init(latencyAvgMs: Double? = nil, latencyMinMs: Double? = nil, latencyMaxMs: Double? = nil, latencyP95Ms: Double? = nil, packetLossPct: Double = 0, jitterMs: Double = 0, pingsSent: Int = 0, pingsOk: Int = 0, statusChanges: [[String: String]]? = nil) {
         self.latencyAvgMs = latencyAvgMs
         self.latencyMinMs = latencyMinMs
         self.latencyMaxMs = latencyMaxMs
@@ -30,6 +34,7 @@ public struct HostMetricsPayload: Codable, Equatable, Sendable {
         self.jitterMs = jitterMs
         self.pingsSent = pingsSent
         self.pingsOk = pingsOk
+        self.statusChanges = statusChanges
     }
 }
 

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "doctornet-protocol"
-version = "0.1.0"
+version = "0.1.1"
 description = "Shared DTOs for the DoctorNet ecosystem (NOC + agents + mobile)"
 readme = "README.md"
 license = { text = "Proprietary" }
@@ -15,7 +15,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/mrhobbes79/doctornet-protocol"
+Homepage = "https://github.com/rigelopenlabs/doctornet-protocol"
 
 [tool.setuptools.packages.find]
 include = ["doctornet_protocol*"]
