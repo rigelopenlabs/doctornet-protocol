@@ -6,6 +6,8 @@ from pydantic import BaseModel, Field
 class LocationPayload(BaseModel):
     site_name: str | None = None
     wifi_ssid: str | None = None
+    # Gateway/AP BSSID — disambiguates same-named networks server-side (P5).
+    wifi_bssid: str | None = None
     gps_lat: float | None = None
     gps_lon: float | None = None
     connection_type: str | None = "wifi"

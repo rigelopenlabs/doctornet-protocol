@@ -3,6 +3,8 @@ import Foundation
 public struct LocationPayload: Codable, Equatable, Sendable {
     public var siteName: String?
     public var wifiSSID: String?
+    /// Gateway/AP BSSID — disambiguates same-named networks server-side (P5).
+    public var wifiBSSID: String?
     public var gpsLat: Double?
     public var gpsLon: Double?
     public var connectionType: String?
@@ -10,14 +12,16 @@ public struct LocationPayload: Codable, Equatable, Sendable {
     enum CodingKeys: String, CodingKey {
         case siteName = "site_name"
         case wifiSSID = "wifi_ssid"
+        case wifiBSSID = "wifi_bssid"
         case gpsLat = "gps_lat"
         case gpsLon = "gps_lon"
         case connectionType = "connection_type"
     }
 
-    public init(siteName: String? = nil, wifiSSID: String? = nil, gpsLat: Double? = nil, gpsLon: Double? = nil, connectionType: String? = "wifi") {
+    public init(siteName: String? = nil, wifiSSID: String? = nil, wifiBSSID: String? = nil, gpsLat: Double? = nil, gpsLon: Double? = nil, connectionType: String? = "wifi") {
         self.siteName = siteName
         self.wifiSSID = wifiSSID
+        self.wifiBSSID = wifiBSSID
         self.gpsLat = gpsLat
         self.gpsLon = gpsLon
         self.connectionType = connectionType

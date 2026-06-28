@@ -68,7 +68,19 @@ final class RoundTripTests: XCTestCase {
     }
 
     func testVersionConstant() {
-        XCTAssertEqual(ProtocolVersion.current, "1.0")
-        XCTAssertEqual(ProtocolVersion.packageVersion, "0.1.1")
+        XCTAssertEqual(ProtocolVersion.current, "1.1")
+        XCTAssertEqual(ProtocolVersion.packageVersion, "0.1.2")
+    }
+
+    func testLocationBSSIDRoundTrip() throws {
+        // Present: wifi_bssid survives encode/decode (and uses the snake_case key).
+        let loc = LocationPayload(siteName: "OFI", wifiSSID: "INFINITUM", wifiBSSID: "AA:BB:CC:DD:EE:FF")
+        let data = try JSONEncoder().encode(loc)
+        XCTAssertTrue(String(data: data, encoding: .utf8)!.contains("wifi_bssid"))
+        let decoded = try JSONDecoder().decode(LocationPayload.self, from: data)
+        XCTAssertEqual(decoded.wifiBSSID, "AA:BB:CC:DD:EE:FF")
+        // Absent (older server/client): field is optional, still decodes.
+        let legacy = #"{"site_name":"OFI","wifi_ssid":"INFINITUM"}"#.data(using: .utf8)!
+        XCTAssertNil(try JSONDecoder().decode(LocationPayload.self, from: legacy).wifiBSSID)
     }
 }
