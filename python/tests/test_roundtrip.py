@@ -7,6 +7,7 @@ from doctornet_protocol import (
     HostMetricsPayload,
     HostPayload,
     IperfSamplePayload,
+    LocationPayload,
     PROTOCOL_VERSION,
     ReportPayload,
     ScannedDevicePayload,
@@ -62,5 +63,15 @@ def test_scan_roundtrip():
     assert decoded.devices[0].vendor == "MikroTik"
 
 
+def test_location_bssid_roundtrip():
+    # Present: wifi_bssid survives the round-trip.
+    loc = LocationPayload(site_name="OFI", wifi_ssid="INFINITUM", wifi_bssid="AA:BB:CC:DD:EE:FF")
+    decoded = LocationPayload.model_validate_json(loc.model_dump_json())
+    assert decoded.wifi_bssid == "AA:BB:CC:DD:EE:FF"
+    # Absent (older client): field defaults to None, still parses.
+    legacy = LocationPayload.model_validate_json('{"site_name":"OFI","wifi_ssid":"INFINITUM"}')
+    assert legacy.wifi_bssid is None
+
+
 def test_version():
-    assert PROTOCOL_VERSION == "1.0"
+    assert PROTOCOL_VERSION == "1.1"
