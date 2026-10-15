@@ -1,5 +1,7 @@
 # doctornet-protocol
 
+Reglas del repo y mapa de documentos: [AGENTS.md](AGENTS.md).
+
 Source of truth de los **contratos de datos** del ecosistema DoctorNet.
 
 Hoy los DTOs (`ReportPayload`, `ScanPayload`, `HostMetric`, etc) viven duplicados:
