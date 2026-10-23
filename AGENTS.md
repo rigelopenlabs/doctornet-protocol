@@ -15,7 +15,7 @@ Ficha: MQ-32 en el registro de fichas de Mesquite AI. Responsable técnico y qui
 | --- | --- |
 | Compilar (Swift) | `swift build` (del mensaje del commit 360a8bd) |
 | Pruebas (Swift) | `swift test` (del mismo commit) |
-| Pruebas (Python) | [POR CONFIRMAR: comando; ninguna fuente lo documenta] |
+| Pruebas (Python) | `cd python && pip install -e . pytest && pytest` (comprobado el 2026-10-23: 3 pruebas pasan) |
 
 ## Contrato
 
@@ -66,7 +66,7 @@ La lista de la familia: [producto.md](../../Proyectos%20JH/doctornet-docs/docs/p
 
 - `README.md` · desactualizado: versión y estado atrasados frente a `Version.swift` y `pyproject.toml`; lista agentes que la ficha no incluye y URLs de la cuenta anterior; enlace roto a `../doctornet-docs/ROADMAP.md`; dice «~150 líneas por lado», ya no es cierto.
 - `python/README.md` · desactualizado: pin y URL de la cuenta anterior.
-- Tags · hay un tag posterior al de `main` solo en la rama remota `feat/cloud-accounts` (`git tag`); los consumidores fijan versiones distintas y iOS y macOS usan `from:` en vez del pin exacto del README. [POR CONFIRMAR: cuál es la versión vigente].
+- Tags · hay un tag posterior al de `main` solo en la rama remota `feat/cloud-accounts` (`git tag`); los consumidores fijan versiones distintas y iOS y macOS usan `from:` en vez del pin exacto del README. Versión vigente (2026-10-23): **v0.1.2**, el tag más reciente. El NOC la fija con `@v0.1.2` en la rama `deploy/railway` que corre en Railway; iOS (`from: 0.1.0`) y macOS (`from: 0.1.1`) también resuelven a v0.1.2; la app Flutter trae una copia en Dart de v0.1.2. La 0.2.0 (límites y `validate()`) está a medias, sin commit ni tag.
 - `python/doctornet_protocol/scan.py:38-39` · define `topology` y `alerts`; `Sources/DoctorNetProtocol/ScanPayload.swift` no los tiene. El NOC los usa ([ingest_scan.py:19-20,84](../doctornet-noc/app/services/ingest_scan.py) y [web.py:686](../doctornet-noc/app/routes/web.py), rigelopenlabs/doctornet-noc): un cliente Swift no puede mandarlos.
 - `python/doctornet_protocol/common.py:30` · `global_health = Field(alias="global")`: `model_dump()` da `global_health` y solo con `by_alias` da `global`, que es lo que espera Swift. Contradice la regla 2 de «Contrato»; latente, nadie lo usa hoy.
 - `report.py`, `ReportPayload.swift` · Python limita tamaños y rangos (`max_length`, `confloat`) y Swift no; `status_changes` es `list[dict]` en Python y `[[String: String]]?` en Swift. Un cliente Swift puede enviar lo que el NOC rechaza.
